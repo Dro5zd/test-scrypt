@@ -1,23 +1,38 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+  const scriptSearchParams = new URLSearchParams(window.location.search);
+
+  const customersAffiliateCode = scriptSearchParams.get('affiliateCode')
+  const iframePlacementId = scriptSearchParams.get('iframePlacementId')
+
   const checkContainerInterval = setInterval(() => {
-  const destCont = document.getElementById('myContainer');
-  if (destCont) {
-  destCont.appendChild(iframe);
-  clearInterval(checkContainerInterval);
-  console.log('destCont', destCont);
-}
-}, 200)
+    const container = document.getElementById(iframePlacementId);
+    if (container) {
+      container.appendChild(iframe);
+        // iframe.contentWindow.postMessage(parentDomain, 'http://localhost:3000/');
+      clearInterval(checkContainerInterval);
+    }
+  }, 200)
 
   const parentDomain = window.location.origin;
 
-  const iframe = document.createElement('iframe');
-  iframe.src = 'http://localhost:3000';
-  iframe.width = '1200';
-  iframe.height = '800';
-  iframe.frameBorder = '0';
+  console.log('parentDomain test', parentDomain)
 
-  iframe.addEventListener('load', function () {
-  iframe.contentWindow.postMessage(parentDomain, 'http://localhost:3000');
-});
+  function objectToSearchParams(value) {
+    const params = new URLSearchParams();
+
+    params.append('affiliateCode', value);
+
+    return params;
+  }
+
+  const searchParams = objectToSearchParams(customersAffiliateCode);
+
+ const urlWithSettings = `http://localhost:3002/?${searchParams}`;
+
+  const iframe = document.createElement('iframe');
+  iframe.src = urlWithSettings;
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
+  iframe.style.border = '0';
 });
