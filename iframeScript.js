@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const scriptSearchParams = new URLSearchParams(window.location.search);
 
-  const customersAffiliateCode = scriptSearchParams.get('affiliateCode')
-  const iframePlacementId = scriptSearchParams.get('iframePlacementId')
+ const customersAffiliateCode = scriptSearchParams.get('affiliateCode') || 'QPFV487OTHF0';
+  const iframePlacementId = scriptSearchParams.get('iframePlacementId') || 'myContainer';
 
   const checkContainerInterval = setInterval(() => {
     const container = document.getElementById(iframePlacementId);
